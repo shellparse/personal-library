@@ -28,16 +28,8 @@ const schema = {
 module.exports =async function (app,client) {
   const db = await client.db("book");
   const collection = await db.createCollection("books",{validator:schema});
-  app.route('/api/books/:id')
+  app.route('/api/books')
     .get(async function (req, res){
-      if(req.params.id){
-        const book= await collection.findOne({_id:ObjectId(req.params.id)})
-        if(book){
-        res.json(book)
-        }else{
-          res.send("no book exists")
-        }
-      }
       const booksArr= await collection.find().toArray();
       //response will be array of book objects
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
@@ -68,9 +60,17 @@ module.exports =async function (app,client) {
 
 
   app.route('/api/books/:id')
-    .get(function (req, res){
+    .get(async function (req, res){
       let bookid = req.params.id;
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+      if(bookid){
+        const book= await collection.findOne({_id:ObjectId(bookid)})
+        if(book){
+        res.json(book)
+        }else{
+          res.send("no book exists")
+        }
+      }
     })
     
     .post(function(req, res){

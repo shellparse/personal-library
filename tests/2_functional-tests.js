@@ -124,7 +124,25 @@ suite('Functional Tests', function() {
       });
       
       test('Test GET /api/books/[id] with valid id in db',  function(done){
-        //done();
+        let bookId="";
+        chai.request(server).post("/api/books").send({title:"just to get the book id"}).end((err,res)=>{
+          if(err){
+            console.error(err);
+          }else{
+            bookId=res.body._id;
+          }
+        });
+        chai.request(server).get("/api/books/"+bookId).end((err,res)=>{
+          if(err){console.error(err)}
+          else {
+          assert.isObject(res.body);
+          assert.property(res.body, 'title');
+          assert.equal(res.body.title, 'just to get the book id');
+          assert.property(res.body, 'comments');
+          assert.isArray(res.body.comments);
+          }
+        })
+        done();
       });
       
     });
