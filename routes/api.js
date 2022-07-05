@@ -35,7 +35,12 @@ const schema = {
 
 module.exports =async function (app,client) {
   const db = await client.db("book");
-  const collection = await db.createCollection("books",{validator:schema});
+  var collection;
+  try{
+   collection = await db.createCollection("books",{validator:schema});
+  }catch (err){
+    collection = await db.collection("books")
+  }
   app.route('/api/books')
     .get(async function (req, res){
       const booksArr= await collection.find().toArray();
