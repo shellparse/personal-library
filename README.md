@@ -1,3 +1,7 @@
 # Personal Library
 
-This is the boilerplate for the Personal Library project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/quality-assurance/quality-assurance-projects/personal-library
+a personal library app for managing books 
+have a basic CRUD operations with mongodb native drivers 
+with minimal front-end
+
+[![personal-library](https://img.shields.io/static/v1?label=Personal-library&message=Live&color=gray&labelColor=green)](https://personal-libraryshellparse.azurewebsites.net/)
