@@ -7,6 +7,7 @@
 */
 
 'use strict';
+const {ObjectId,MongoClient} =require("mongodb");
 
 const schema = {
   $jsonSchema:{
@@ -20,6 +21,13 @@ const schema = {
         commentcount:{
           bsonType:"int",
           description:"comments count"
+        },
+        comments:{
+          bsonType:"array",
+          description:"array of all comments",
+          items: {
+            bsonType: "string",
+         }
         }
     }
   }
@@ -41,12 +49,14 @@ module.exports =async function (app,client) {
     })
     
     .post(async function (req, res){
-      let {title,commentcount=0}=req.body;
+      let {title,commentcount=0,comments=[]}=req.body;
       //response will contain new book object including atleast _id and title
       if(title){
-         const insert=await collection.insertOne({title:title,commentcount:commentcount});
+         const insert=await collection.insertOne({title:title,commentcount:commentcount,comments:comments});
       if(insert.acknowledged){
         res.json({title:title,_id:insert.insertedId})
+      }else{
+        
       }
     }else{
       res.send("missing required field title")
@@ -54,7 +64,18 @@ module.exports =async function (app,client) {
     })
     
     .delete(function(req, res){
-      //if successful response will be 'complete delete successful'
+      //if successful response will be 'complete delete successful '
+      collection.deleteMany((err,doc)=>{
+        if(err){
+          console.error(err);
+        }else{
+          if(doc.deletedCount){
+            res.send("complete delete successful");
+          }else{
+            res.send("something went wrong")
+          }
+        }
+      })
     });
 
 
@@ -77,11 +98,37 @@ module.exports =async function (app,client) {
       let bookid = req.params.id;
       let comment = req.body.comment;
       //json res format same as .get
+      if(comment){
+      collection.findOneAndUpdate({_id:ObjectId(bookid)},{$push:{comments:comment},$inc:{commentcount:1}},{returnDocument:"after"},(err,doc)=>{
+        if(err){
+          console.error(err);
+        }else{
+          if(doc.value){
+          res.json(doc.value)
+        }else{
+          res.send("no book exists")
+        }
+        }
+      })
+    }else{
+      res.send('missing required field comment')
+    }
     })
     
     .delete(function(req, res){
       let bookid = req.params.id;
       //if successful response will be 'delete successful'
+      collection.deleteOne({_id:ObjectId(bookid)},(err,doc)=>{
+        if(err){
+          console.error(err);
+        }else{
+          if(doc.deletedCount>0){
+            res.send("delete successful");
+          }else{
+            res.send("no book exists");
+          }
+        }
+      })
     });
       
 //404 Not Found Middleware
