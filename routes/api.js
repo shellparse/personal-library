@@ -7,7 +7,7 @@
 */
 
 'use strict';
-const {ObjectId,MongoClient} =require("mongodb");
+const {ObjectId} =require("mongodb");
 
 const schema = {
   $jsonSchema:{

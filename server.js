@@ -26,7 +26,7 @@ app.route('/')
 
 //For FCC testing purposes
 fccTestingRoutes(app);
-dB(async(client)=>{
+dB((client)=>{
   //Routing for API 
   apiRoutes(app,client);
 });
