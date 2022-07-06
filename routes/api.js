@@ -137,9 +137,9 @@ module.exports =async function (app,client) {
     });
       
 //404 Not Found Middleware
-app.use(function(req, res, next) {
-  res.status(404)
-    .type('text')
-    .send('Not Found');
-});
+// app.use(function(req, res, next) {
+//   res.status(404)
+//     .type('text')
+//     .send('Not Found');
+// });
 };
