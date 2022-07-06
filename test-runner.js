@@ -84,6 +84,7 @@ emitter.run = function() {
   } catch(e) {
     throw(e);
   }
+  console.log("finished with test runner")
 };
 
 module.exports = emitter;

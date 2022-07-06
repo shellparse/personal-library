@@ -74,7 +74,7 @@ module.exports = function (app) {
   });
   
 };
-
+console.log("finished with testing routes")
 function testFilter(tests, type, n) {
   let out;
   switch (type) {

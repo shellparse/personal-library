@@ -68,7 +68,7 @@ module.exports =async function (app,client) {
     }
     })
     
-    .delete(function(req, res){
+    .delete(async function(req, res){
       //if successful response will be 'complete delete successful '
       collection.deleteMany((err,doc)=>{
         if(err){
@@ -135,11 +135,11 @@ module.exports =async function (app,client) {
         }
       })
     });
-      
-//404 Not Found Middleware
-// app.use(function(req, res, next) {
-//   res.status(404)
-//     .type('text')
-//     .send('Not Found');
-// });
+      console.log("finished registering endpoints")
+// 404 Not Found Middleware
+app.use(function(req, res, next) {
+  res.status(404)
+    .type('text')
+    .send('Not Found');
+});
 };

@@ -24,12 +24,12 @@ app.route('/')
     res.sendFile(process.cwd() + '/views/index.html');
   });
 
+  //For FCC testing purposes
+  fccTestingRoutes(app);
   
   dB(async(client)=>{
     //Routing for API 
     await apiRoutes(app,client);
-    //For FCC testing purposes
-    fccTestingRoutes(app);
   });
   
 
