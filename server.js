@@ -23,7 +23,7 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
-  
+  fccTestingRoutes(app)
   dB(async(client)=>{
     //Routing for API 
     await apiRoutes(app,client);
