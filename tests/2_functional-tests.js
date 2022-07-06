@@ -14,20 +14,6 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-
-  test('Test POST /api/books with no title given', function(done) {
-    chai.request(server).post("/api/books").send({}).end((err,res)=>{
-      if(err){
-        console.error(err);
-      }else{
-        assert.equal(res.status, 200);
-        assert.isString(res.text);
-        assert.equal(res.text, 'missing required field title');
-      }
-      done();
-    })
-  });
-
   /*
   * ----[EXAMPLE TEST]----
   * Each test should completely test the response of the API end-point including response status code!
