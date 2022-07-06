@@ -24,13 +24,14 @@ app.route('/')
     res.sendFile(process.cwd() + '/views/index.html');
   });
 
-//For FCC testing purposes
-fccTestingRoutes(app);
-dB(async(client)=>{
-  //Routing for API 
-  await apiRoutes(app,client);
-});
-
+  
+  dB(async(client)=>{
+    //Routing for API 
+    await apiRoutes(app,client);
+  });
+  
+  //For FCC testing purposes
+  fccTestingRoutes(app);
 
 //Start our server and tests!
 const listener = app.listen(process.env.PORT || 3000, function () {
