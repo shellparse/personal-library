@@ -7,7 +7,7 @@ async function  main(callback){
         const mongod = await MongoMemoryServer.create();
         const dbUri = mongod.getUri();
         console.log(dbUri);
-        client= new MongoClient(dbUri);
+        client= new MongoClient("mongodb+srv://shellparse:Mido1991@cluster0.yzkfu.mongodb.net/?retryWrites=true&w=majority");
         await client.connect();
         await callback(client);
         }catch(e){

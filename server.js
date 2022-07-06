@@ -23,9 +23,6 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
-
-  //For FCC testing purposes
-  fccTestingRoutes(app);
   
   dB(async(client)=>{
     //Routing for API 
@@ -45,7 +42,7 @@ const listener = app.listen(process.env.PORT || 3000, function () {
           console.log('Tests are not valid:');
           console.error(e);
       }
-    }, 1500);
+    }, 3500);
   }
 });
 
